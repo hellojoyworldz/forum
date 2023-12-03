@@ -5,6 +5,9 @@ const app = express()
 // static 파일 : img, css, js 파일
 app.use(express.static(__dirname + '/public'))
 
+// ejs 셋팅
+app.set('view engine', 'ejs')
+
 const { MongoClient } = require('mongodb')
 
 let db
@@ -49,7 +52,6 @@ app.get('/list', async (요청, 응답) => {
   // 컬렉션의 모든 document 출력 하는 법
   let result = await db.collection('post').find().toArray()
   console.log(result)
-  응답.send('DB에 있던 게시물')
 
   /*
   // await이 싫으면
@@ -57,4 +59,18 @@ app.get('/list', async (요청, 응답) => {
     // 윗줄이 작업이 완료가 되면 then안에 있는 코드 실행
   })
   */
+
+
+  // 서버 데이터를 ejs 파일에 넣으려면
+  // 1. ejs 파일로 데이터 전송
+  // 2. ejs 파일 안에서 <%=데이터이름 %>
+
+  응답.render('list.ejs' , { 글목록  : result})
+
+
+})
+
+// 현재 서버의 시간을 보내주는 기능
+app.get('/time' , (요청, 응답) => {
+  응답.render('time.ejs', { data : new Date()})
 })

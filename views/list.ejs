@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>list</title>
+    <link href="main.css" rel="stylesheet">
+</head>
+<body class="grey-bg">
+    <%= //JSON.stringify(글목록) %>
+
+    <!-- include -->
+    <%- include('nav.ejs') %>
+
+    <!--
+        서버사이드렌더링 : html에 데이터를 채워줘서 유저에게 보내주는 것
+        클라이언트사이드렌더링 : 서버에서 빈 html과 데이터를 보내주고, 데이터를 가지고 유저 브라우저에서  html 생성해주기 -> 부드러운 사이트
+    -->
+    <div class="white-bg">
+        <% for(let i=0; i < 글목록.length; i++){ %>
+        <div class="list-box">
+            <!--
+                <%- %> : html취급
+                <%= %> : 문자취급
+            -->
+            <h4><%= 글목록[i].title %>></h4>
+            <p><%= 글목록[i].content %></p>
+        </div>
+        <% } %>
+    </div>
+  
+  </body>
+</html>
